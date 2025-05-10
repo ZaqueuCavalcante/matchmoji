@@ -18,8 +18,7 @@
     $: matches.length === maxMatches && gameWon()
     $: time === 0 && gameLost()
 
-    $: state === 'playing' && startGameTimer()
-
+    $: state === 'playing' && (!timerId && startGameTimer())
 
     function createGrid(size: number): string[] {
         let cards = new Set<string>()
@@ -50,7 +49,6 @@
         setTimeout(() => selectedCards = [], 300)
     }
 
-
     function startGameTimer() {
         function countDown() {
             state !== 'paused' && (time -= 1)
@@ -69,6 +67,19 @@
         resetGame()
     }
 
+    function pauseGame(e: KeyboardEvent) {
+        if (e.key === 'Escape') {
+            switch (state) {
+                case 'playing':
+                    state = 'paused'
+                    break
+                case 'paused':
+                    state = 'playing'
+                    break
+            }
+        }
+    }
+
     function resetGame() {
         timerId && clearInterval(timerId)
         timerId = null
@@ -78,6 +89,8 @@
         matches = []
     }
 </script>
+
+<svelte:window on:keydown={pauseGame}></svelte:window>
 
 {#if state === 'idle'}
     <h1>MatchMoji</h1>
@@ -114,6 +127,10 @@
             </button>
         {/each}
     </div>
+{/if}
+
+{#if state === 'paused'}
+    <h1>Game paused</h1>
 {/if}
 
 {#if state === 'lost'}
