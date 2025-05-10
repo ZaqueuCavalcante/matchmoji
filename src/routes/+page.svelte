@@ -4,7 +4,7 @@
     type State = 'idle' | 'playing' | 'paused' | 'won' | 'lost'
 
     let state: State = 'idle'
-    let size: number = 16
+    let size: number = 20
     let grid = createGrid(size)
     var maxMatches = grid.length / 2
 
@@ -162,20 +162,20 @@
     .cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 0.4rem;
+        gap: 0.5rem;
     }
 
     .matches {
         display: flex;
-        gap: 0.5rem;
-        margin-block: 2rem;
-        font-size: 3rem;
+        gap: 0.10rem;
+        margin-block: 0.5rem;
+        font-size: 1.3rem;
     }
 
     .card {
-        height: 140px;
-        width: 140px;
-        font-size: 4rem;
+        height: 70px;
+        width: 70px;
+        font-size: 3rem;
         background-color: var(--bg-2);
 
         transition: rotate 0.3s ease-out;
