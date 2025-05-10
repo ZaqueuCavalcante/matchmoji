@@ -4,7 +4,7 @@
     type State = 'idle' | 'playing' | 'paused' | 'won' | 'lost'
 
     let state: State = 'idle'
-    let size: number = 20
+    let size: number = 16
     let grid = createGrid(size)
     var maxMatches = grid.length / 2
 
@@ -12,7 +12,7 @@
     let matches: string[] = []
 
     let timerId: number | null = null
-    let time: number = 20
+    let time: number = 60
 
     $: selectedCards.length === 2 && matchSelectedCards()
     $: matches.length === maxMatches && gameWon()
@@ -83,7 +83,7 @@
     function resetGame() {
         timerId && clearInterval(timerId)
         timerId = null
-        time = 20
+        time = 60
         grid = createGrid(size)
         selectedCards = []
         matches = []
@@ -161,7 +161,7 @@
 
     .cards {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.4rem;
     }
 
