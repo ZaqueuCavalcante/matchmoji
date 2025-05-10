@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>Match Moji</title>
+    <title>MatchMoji</title>
 </svelte:head>
 
 <slot />
