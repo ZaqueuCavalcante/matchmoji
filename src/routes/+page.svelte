@@ -168,14 +168,14 @@
     .matches {
         display: flex;
         gap: 0.5rem;
-        margin-block: 2rem;
-        font-size: 3rem;
+        margin-block: 0.5rem;
+        font-size: 1.2rem;
     }
 
     .card {
-        height: 140px;
-        width: 140px;
-        font-size: 4rem;
+        height: 5.1rem;
+        width: 5.1rem;
+        font-size: 2.8rem;
         background-color: var(--bg-2);
 
         transition: rotate 0.3s ease-out;
