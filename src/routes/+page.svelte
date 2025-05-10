@@ -11,9 +11,14 @@
     let selectedCards: number[] = []
     let matches: string[] = []
 
+    let timerId: number | null = null
+    let time: number = 20
+
     $: selectedCards.length === 2 && matchSelectedCards()
     $: matches.length === maxMatches && gameWon()
+    $: time === 0 && gameLost()
 
+    $: state === 'playing' && startGameTimer()
 
 
     function createGrid(size: number): string[] {
@@ -45,8 +50,32 @@
         setTimeout(() => selectedCards = [], 300)
     }
 
+
+    function startGameTimer() {
+        function countDown() {
+            state !== 'paused' && (time -= 1)
+        }
+
+        timerId = setInterval(countDown, 1000)
+    }
+
+    function gameLost() {
+        state = 'lost'
+        resetGame()
+    }
+
     function gameWon() {
         state = 'won'
+        resetGame()
+    }
+
+    function resetGame() {
+        timerId && clearInterval(timerId)
+        timerId = null
+        time = 20
+        grid = createGrid(size)
+        selectedCards = []
+        matches = []
     }
 </script>
 
@@ -57,6 +86,10 @@
 
 {#if state === 'playing'}
     <h2>MatchMoji</h2>
+
+    <h1 class="timer" class:pulse={time <= 10}>
+        {time}
+    </h1>
 
     <div class="matches">
         {#each matches as match}
@@ -95,6 +128,19 @@
 {/if}
 
 <style>
+    .timer {
+        transition: color 0.3s ease;
+    }
+    .pulse {
+        color: var(--pulse);
+        animation: pulse 1s infinite ease;
+    }
+    @keyframes pulse {
+        to {
+            scale: 1.4;
+        }
+    }
+
     .cards {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
